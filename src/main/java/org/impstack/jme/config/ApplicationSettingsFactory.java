@@ -40,7 +40,7 @@ public final class ApplicationSettingsFactory {
         DisplayMode displayMode = graphicsDevice.getDisplayMode();
 
         AppSettings settings = new AppSettings(true);
-        settings.setFrequency(displayMode.getBitDepth());
+        settings.setFrequency(displayMode.getRefreshRate());
         settings.setTitle(getTitle());
         settings.setGammaCorrection(ApplicationProperties.INSTANCE.get(GAMMA_CORRECTION, GAMMA_CORRECTION_DEFAULT));
         settings.setFrameRate(ApplicationProperties.INSTANCE.get(FRAMERATE, FRAMERATE_DEFAULT));
