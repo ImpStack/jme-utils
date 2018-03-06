@@ -17,9 +17,9 @@ public final class SpatialUtils {
 
     /**
      * Perform a depthfirst traversal of the spatial, to locate the first control of the given type.
-     *
-     * @param spatial: the scene graph to traverse
-     * @param <T> type: the class of the control
+     * @param spatial the scene graph to traverse
+     * @param type the class of the control
+     * @param <T> the type of the control
      * @return the first control that matches the given class, or null if no control is found.
      */
     public static <T extends Control> T findControl(Spatial spatial, Class<T> type) {

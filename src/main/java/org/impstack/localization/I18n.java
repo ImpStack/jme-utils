@@ -38,8 +38,8 @@ public enum I18n {
      * be camelcased and inserted in the given key.
      * eg. t("button.{0}.{1}.title", "Hello World", "foo") will look for key: "button.helloWorld.foo.title"
      * in the given key String
-     * @param key
-     * @param params
+     * @param key the key to look for
+     * @param params the params to insert in the key
      * @return the string for the given key
      */
     public String t(String key, Object... params) {

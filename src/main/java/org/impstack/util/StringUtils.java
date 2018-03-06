@@ -13,7 +13,7 @@ public class StringUtils {
      * toCamelCase("my name is Remy") : "myNameIsRemy"
      * toCamelCase("I am FINE") : "iAmFine"
      * toCamelCase("     "): ""
-     * @param string
+     * @param string the input string
      * @return camelcase representation of the given string
      */
     public static String toCamelCase(String string) {
@@ -28,8 +28,8 @@ public class StringUtils {
     /**
      * Returns the given string, with a maximum of {@code max} characters.
      * Characters after the {@code max} will be stripped
-     * @param string
-     * @param max
+     * @param string the input string
+     * @param max the maximum allowed length of the output string
      * @return stripped string
      */
     public static String max(String string, int max) {
@@ -38,21 +38,23 @@ public class StringUtils {
 
     /**
      * Returns a comma separated concatenated string of all the objects in the collection
-     * @param collection
+     * @param collection collection to concatenate
+     * @param <T> the type of objects in the collection
      * @return concatenated string
      */
-    public static String toString(Collection collection) {
+    public static <T> String toString(Collection<T> collection) {
         return toString(collection, ",");
     }
 
     /**
      * Returns a concatenated string of all the objects in the collection with the given delimiter
-     * @param collection
-     * @param delimiter
+     * @param collection collection to concatenate
+     * @param <T> the type of objects in the collection
+     * @param delimiter the delimiter
      * @return concatenated string
      */
-    public static String toString(Collection collection, CharSequence delimiter) {
-        return collection != null ? collection.stream().map(Object::toString).collect(Collectors.joining(",")).toString() : null;
+    public static <T> String toString(Collection<T> collection, CharSequence delimiter) {
+        return collection != null ? collection.stream().map(Object::toString).collect(Collectors.joining(",")) : null;
     }
 
 }
