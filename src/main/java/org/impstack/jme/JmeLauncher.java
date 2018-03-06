@@ -39,7 +39,6 @@ public abstract class JmeLauncher extends SimpleApplication {
         init();
     }
 
-    public void init() {
-    }
+    public abstract void init();
 
 }
