@@ -22,14 +22,33 @@ public final class GeometryUtils {
         this.application = application;
     }
 
+    /**
+     * Creates a geometry of the given mesh and an unshaded material with a {@code ColorRGBA.Blue} color
+     * @param mesh the mesh
+     * @return a geometry
+     */
     public Geometry createGeometry(Mesh mesh) {
         return createGeometry(mesh.toString(), mesh, ColorRGBA.Blue, false);
     }
 
+    /**
+     * Create a geometry of the given mesh and an ushaded material with the given color.
+     * @param mesh the mesh
+     * @param color the color of the material
+     * @return a geometry
+     */
     public Geometry createGeometry(Mesh mesh, ColorRGBA color) {
         return createGeometry(mesh.toString(), mesh, color, false);
     }
 
+    /**
+     * Creates a geometry of the given mesh and an unshaded material with the given color
+     * @param name name of the geometry
+     * @param mesh the mesh
+     * @param color the color of the material
+     * @param wireframe toggle wireframe renderstate
+     * @return a geometry
+     */
     public Geometry createGeometry(String name, Mesh mesh, ColorRGBA color, boolean wireframe) {
         Geometry geometry = new Geometry(name, mesh);
         Material material = new Material(application.getAssetManager(), DEBUG_MATERIAL);
