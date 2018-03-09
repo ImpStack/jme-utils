@@ -22,12 +22,12 @@ import java.nio.file.Paths;
  * The given model is the path starting from the assets folder. The generated model
  * is placed next to the original blend file.
  *
- * When an additional material is specified, this material will be set on the model.
- * All parameters set on the original material will be copied to the new material.
- * The material is the path starting from the assets folder.
+ * When an additional materialDef is specified, this materialDef will be set on the model.
+ * All parameters set on the original materialDef will be copied to the new materialDef.
+ * The materialDef is the path starting from the assets folder.
  *
  * When a colorspace is specified, this colorspace will be set on the texture of the DiffuseMap
- * of the material.
+ * of the materialDef.
  *
  * eg.
  * new BlenderConverter("~/Projects/jme-template/assets"), assetManager).setModel("Models/test.blend").convert();
@@ -39,7 +39,7 @@ public class BlenderConverter {
     private final Path assetsFolder;
     private final AssetManager assetManager;
     private String model;
-    private String material;
+    private String materialDef;
     private ColorSpace colorSpace;
 
     /**
@@ -60,21 +60,25 @@ public class BlenderConverter {
         LOG.info("Loading asset {} in folder {}", model, assetsFolder);
         Spatial spatial = assetManager.loadModel(model);
 
-        // set a new material on the geometry. Try to copy all parameters of the old material to the new material.
+        // set a new materialDef on the geometry. Try to copy all parameters of the old materialDef to the new materialDef.
         // if a colorspace is set, the texture of the diffusemap will be set to this colorspace
-        if (!StringUtils.isEmpty(material)) {
+        if (!StringUtils.isEmpty(materialDef)) {
             SpatialUtils.getGeometry(spatial).ifPresent(geometry -> {
                 Material oldMaterial = geometry.getMaterial();
-                Material newMaterial = new Material(assetManager, material);
+                Material newMaterial = new Material(assetManager, materialDef);
                 for (MatParam matParam : oldMaterial.getParams()) {
-                    newMaterial.setParam(matParam.getName(), matParam.getVarType(), matParam.getValue());
-                    LOG.info("Setting {} -> {}", matParam.getName(), matParam.getValueAsString());
+                    try {
+                        newMaterial.setParam(matParam.getName(), matParam.getVarType(), matParam.getValue());
+                        LOG.info("Setting {} -> {}", matParam.getName(), matParam.getValueAsString());
+                    } catch (IllegalArgumentException e) {
+                        LOG.warn("Unable to set {} on materialDef {}", matParam, materialDef);
+                    }
                     if (matParam.getName().equals("DiffuseMap") && colorSpace != null) {
                         LOG.info("Setting Colorspace {} on DiffuseMap", colorSpace);
                         ((Texture) matParam.getValue()).getImage().setColorSpace(colorSpace);
                     }
                 }
-                LOG.info("Setting {} on {}", material, model);
+                LOG.info("Setting {} on {}", materialDef, model);
                 geometry.setMaterial(newMaterial);
             });
         }
@@ -97,12 +101,12 @@ public class BlenderConverter {
         return this;
     }
 
-    public String getMaterial() {
-        return material;
+    public String getMaterialDef() {
+        return materialDef;
     }
 
-    public BlenderConverter setMaterial(String material) {
-        this.material = material;
+    public BlenderConverter setMaterialDef(String materialDef) {
+        this.materialDef = materialDef;
         return this;
     }
 
