@@ -65,7 +65,7 @@ public class BlenderConverter {
         if (!StringUtils.isEmpty(material)) {
             SpatialUtils.getGeometry(spatial).ifPresent(geometry -> {
                 Material oldMaterial = geometry.getMaterial();
-                Material newMaterial = assetManager.loadMaterial(material);
+                Material newMaterial = new Material(assetManager, material);
                 for (MatParam matParam : oldMaterial.getParams()) {
                     newMaterial.setParam(matParam.getName(), matParam.getVarType(), matParam.getValue());
                     LOG.info("Setting {} -> {}", matParam.getName(), matParam.getValueAsString());
