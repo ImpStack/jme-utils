@@ -78,7 +78,7 @@ public class ViewPortState extends BaseAppState {
 
     @Override
     protected void cleanup(Application app) {
-        viewPort.detachScene(spatial);
+        viewPort.clearScenes();
 
         switch (order) {
             case PREVIEW:
