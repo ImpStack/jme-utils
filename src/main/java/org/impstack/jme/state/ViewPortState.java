@@ -2,6 +2,7 @@ package org.impstack.jme.state;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
+import com.jme3.math.Vector2f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
@@ -96,6 +97,23 @@ public class ViewPortState extends BaseAppState {
 
     public ViewPort getViewPort() {
         return viewPort;
+    }
+
+    /**
+     * A helper method to set the size and location of the viewport. Where (0,0) is the bottom left corner of the
+     * screen, and (camera.width, camera.height) is the upper right corner of the screen.
+     * The viewport is positioned by the bottom left corner and the size of the viewport grows the viewport up and right.
+     * @param width width of the viewport
+     * @param height height of the viewport
+     * @param location location of the viewport
+     * @return the viewport state
+     */
+    public ViewPortState setSize(int width, int height, Vector2f location) {
+        float w = camera.getWidth();
+        float h = camera.getHeight();
+        camera.setViewPort(1 / w * location.x, 1 / w * (location.x + width), 1 / h * location.y, 1 / h * (location.y + height));
+        LOG.debug("Setting viewport location: (x1, x2, y1, y2) ({}, {}, {}, {})", 1 / w * location.x, 1 / w * (location.x + width), 1 / h * location.y, 1 / h * (location.y + height));
+        return this;
     }
 
 }
