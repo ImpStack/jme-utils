@@ -59,7 +59,7 @@ public class ViewPortState extends BaseAppState {
         viewPort.setClearFlags(true, true, true);
         viewPort.attachScene(spatial);
 
-        LOG.info("Created viewport {} for rendering with attached scene {}", name, spatial);
+        LOG.debug("Created viewport {} for rendering with attached scene {}", viewPort, spatial);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class ViewPortState extends BaseAppState {
                 break;
         }
 
-        LOG.info("Detached scene {} and removed viewport {} for rendering", spatial, viewPort);
+        LOG.debug("Detached scene {} and removed viewport {} for rendering", spatial, viewPort);
     }
 
     public ViewPort getViewPort() {
