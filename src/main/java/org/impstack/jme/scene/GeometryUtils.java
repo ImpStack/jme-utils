@@ -15,6 +15,7 @@ public final class GeometryUtils {
     private static final Logger LOG = LoggerFactory.getLogger(GeometryUtils.class);
     private static final String DEBUG_MATERIAL = "Common/MatDefs/Misc/Unshaded.j3md";
     private static final String DEBUG_MATERIAL_COLOR = "Color";
+    private static final String DEBUG_MATERIAL_TEXTURE = "ColorMap";
 
     private final Application application;
 
@@ -39,6 +40,18 @@ public final class GeometryUtils {
      */
     public Geometry createGeometry(Mesh mesh, ColorRGBA color) {
         return createGeometry(mesh.toString(), mesh, color, false);
+    }
+
+    /**
+     * Create a geometry of the given mesh and an unshaded material with the given texture.
+     * @param mesh the mesh
+     * @param texture the texture of the material
+     * @return a geometry
+     */
+    public Geometry createGeometry(Mesh mesh, String texture) {
+        Geometry geometry = createGeometry(mesh, ColorRGBA.White);
+        geometry.getMaterial().setTexture(DEBUG_MATERIAL_TEXTURE, application.getAssetManager().loadTexture(texture));
+        return geometry;
     }
 
     /**
