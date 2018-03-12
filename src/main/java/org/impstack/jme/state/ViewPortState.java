@@ -23,22 +23,22 @@ public class ViewPortState extends BaseAppState {
 
     private final String name;
     private final Camera camera;
-    private final Spatial spatial;
+    private final Spatial scene;
     private final RenderOrder order;
     private ViewPort viewPort;
 
-    public ViewPortState(Camera camera, Spatial spatial) {
-        this(camera.getName(), camera, spatial, RenderOrder.POSTVIEW);
+    public ViewPortState(Camera camera, Spatial scene) {
+        this(camera.getName(), camera, scene, RenderOrder.POSTVIEW);
     }
 
-    public ViewPortState(Camera camera, Spatial spatial, RenderOrder order) {
-        this(camera.getName(), camera, spatial, order);
+    public ViewPortState(Camera camera, Spatial scene, RenderOrder order) {
+        this(camera.getName(), camera, scene, order);
     }
 
-    public ViewPortState(String name, Camera camera, Spatial spatial, RenderOrder order) {
+    public ViewPortState(String name, Camera camera, Spatial scene, RenderOrder order) {
         this.name = name;
         this.camera = camera;
-        this.spatial = spatial;
+        this.scene = scene;
         this.order = order;
     }
 
@@ -57,9 +57,9 @@ public class ViewPortState extends BaseAppState {
         }
 
         viewPort.setClearFlags(true, true, true);
-        viewPort.attachScene(spatial);
+        viewPort.attachScene(scene);
 
-        LOG.debug("Created viewport {} for rendering with attached scene {}", viewPort, spatial);
+        LOG.debug("Created viewport {} for rendering with attached scene {}", viewPort, scene);
     }
 
     @Override
@@ -68,8 +68,8 @@ public class ViewPortState extends BaseAppState {
 
     @Override
     public void update(float tpf) {
-        spatial.updateLogicalState(tpf);
-        spatial.updateGeometricState();
+        scene.updateLogicalState(tpf);
+        scene.updateGeometricState();
     }
 
     @Override
@@ -92,11 +92,15 @@ public class ViewPortState extends BaseAppState {
                 break;
         }
 
-        LOG.debug("Detached scene {} and removed viewport {} for rendering", spatial, viewPort);
+        LOG.debug("Detached scene {} and removed viewport {} for rendering", scene, viewPort);
     }
 
     public ViewPort getViewPort() {
         return viewPort;
+    }
+
+    public Spatial getScene() {
+        return scene;
     }
 
     /**
