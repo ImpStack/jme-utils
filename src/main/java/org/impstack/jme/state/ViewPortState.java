@@ -16,7 +16,7 @@ public class ViewPortState extends BaseAppState {
 
     private static final Logger LOG = LoggerFactory.getLogger(ViewPortState.class);
 
-    enum RenderOrder {
+    public enum RenderOrder {
         PREVIEW, MAINVIEW, POSTVIEW;
     }
 
@@ -25,6 +25,10 @@ public class ViewPortState extends BaseAppState {
     private final Spatial spatial;
     private final RenderOrder order;
     private ViewPort viewPort;
+
+    public ViewPortState(Camera camera, Spatial spatial) {
+        this(camera.getName(), camera, spatial, RenderOrder.POSTVIEW);
+    }
 
     public ViewPortState(Camera camera, Spatial spatial, RenderOrder order) {
         this(camera.getName(), camera, spatial, order);
