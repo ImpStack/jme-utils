@@ -40,6 +40,7 @@ public class BlenderConverter {
     private final AssetManager assetManager;
     private String model;
     private String materialDef;
+    private Material material;
     private ColorSpace colorSpace;
 
     /**
@@ -62,7 +63,7 @@ public class BlenderConverter {
 
         // set a new materialDef on the geometry. Try to copy all parameters of the old materialDef to the new materialDef.
         // if a colorspace is set, the texture of the diffusemap will be set to this colorspace
-        if (!StringUtils.isEmpty(materialDef)) {
+        if (!StringUtils.isEmpty(materialDef) && material == null) {
             SpatialUtils.getGeometry(spatial).ifPresent(geometry -> {
                 Material oldMaterial = geometry.getMaterial();
                 Material newMaterial = new Material(assetManager, materialDef);
@@ -80,6 +81,11 @@ public class BlenderConverter {
                 }
                 LOG.info("Setting {} on {}", materialDef, model);
                 geometry.setMaterial(newMaterial);
+            });
+        } else if (material != null) {
+            SpatialUtils.getGeometry(spatial).ifPresent(geometry -> {
+                LOG.info("Setting {} on {}", material, model);
+                geometry.setMaterial(material);
             });
         }
 
@@ -116,6 +122,15 @@ public class BlenderConverter {
 
     public BlenderConverter setColorSpace(ColorSpace colorSpace) {
         this.colorSpace = colorSpace;
+        return this;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public BlenderConverter setMaterial(Material material) {
+        this.material = material;
         return this;
     }
 
