@@ -4,6 +4,7 @@ import com.jme3.asset.AssetManager;
 import com.jme3.export.binary.BinaryExporter;
 import com.jme3.material.MatParam;
 import com.jme3.material.Material;
+import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Spatial;
 import com.jme3.texture.Texture;
 import com.jme3.texture.image.ColorSpace;
@@ -42,6 +43,7 @@ public class BlenderConverter {
     private String materialDef;
     private Material material;
     private ColorSpace colorSpace;
+    private RenderQueue.Bucket bucket;
 
     /**
      * @param assetsFolder the absolute path to the assets folder
@@ -89,6 +91,13 @@ public class BlenderConverter {
             });
         }
 
+        if (bucket != null) {
+            SpatialUtils.getGeometry(spatial).ifPresent(geometry -> {
+                geometry.setQueueBucket(bucket);
+                LOG.info("Setting QueueBucket {} on {}", bucket, model);
+            });
+        }
+
         try {
             Path path = Paths.get(assetsFolder.toString(), getOutputName(model));
             BinaryExporter.getInstance().save(spatial, path.toFile());
@@ -131,6 +140,15 @@ public class BlenderConverter {
 
     public BlenderConverter setMaterial(Material material) {
         this.material = material;
+        return this;
+    }
+
+    public RenderQueue.Bucket getBucket() {
+        return bucket;
+    }
+
+    public BlenderConverter setBucket(RenderQueue.Bucket bucket) {
+        this.bucket = bucket;
         return this;
     }
 
