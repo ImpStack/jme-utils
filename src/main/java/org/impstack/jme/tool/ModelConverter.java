@@ -31,11 +31,11 @@ import java.nio.file.Paths;
  * of the materialDef.
  *
  * eg.
- * new BlenderConverter("~/Projects/jme-template/assets"), assetManager).setModel("Models/test.blend").convert();
+ * new ModelConverter("~/Projects/jme-template/assets"), assetManager).setModel("Models/test.blend").convert();
  */
-public class BlenderConverter {
+public class ModelConverter {
 
-    private static final Logger LOG = LoggerFactory.getLogger(BlenderConverter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ModelConverter.class);
 
     private final Path assetsFolder;
     private final AssetManager assetManager;
@@ -49,7 +49,7 @@ public class BlenderConverter {
      * @param assetsFolder the absolute path to the assets folder
      * @param assetManager the asset manager
      */
-    public BlenderConverter(Path assetsFolder, AssetManager assetManager) {
+    public ModelConverter(Path assetsFolder, AssetManager assetManager) {
         this.assetsFolder = assetsFolder;
         this.assetManager = assetManager;
     }
@@ -111,7 +111,7 @@ public class BlenderConverter {
         return model;
     }
 
-    public BlenderConverter setModel(String model) {
+    public ModelConverter setModel(String model) {
         this.model = model;
         return this;
     }
@@ -120,7 +120,7 @@ public class BlenderConverter {
         return materialDef;
     }
 
-    public BlenderConverter setMaterialDef(String materialDef) {
+    public ModelConverter setMaterialDef(String materialDef) {
         this.materialDef = materialDef;
         return this;
     }
@@ -129,7 +129,7 @@ public class BlenderConverter {
         return colorSpace;
     }
 
-    public BlenderConverter setColorSpace(ColorSpace colorSpace) {
+    public ModelConverter setColorSpace(ColorSpace colorSpace) {
         this.colorSpace = colorSpace;
         return this;
     }
@@ -138,7 +138,7 @@ public class BlenderConverter {
         return material;
     }
 
-    public BlenderConverter setMaterial(Material material) {
+    public ModelConverter setMaterial(Material material) {
         this.material = material;
         return this;
     }
@@ -147,7 +147,7 @@ public class BlenderConverter {
         return bucket;
     }
 
-    public BlenderConverter setBucket(RenderQueue.Bucket bucket) {
+    public ModelConverter setBucket(RenderQueue.Bucket bucket) {
         this.bucket = bucket;
         return this;
     }
