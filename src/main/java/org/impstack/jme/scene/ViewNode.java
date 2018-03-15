@@ -1,7 +1,8 @@
-package org.impstack.jme.state;
+package org.impstack.jme.scene;
 
 import com.jme3.app.Application;
 import com.jme3.scene.Node;
+import org.impstack.jme.state.BaseGuiAppState;
 
 /**
  * Class that represent the lifecycle of a View.
@@ -11,9 +12,9 @@ public abstract class ViewNode<T extends BaseGuiAppState> extends Node {
 
     private T guiAppstate;
 
-    protected abstract void initialize();
+    public abstract void initialize();
 
-    protected abstract void cleanup();
+    public abstract void cleanup();
 
     public T getGuiAppstate() {
         return guiAppstate;

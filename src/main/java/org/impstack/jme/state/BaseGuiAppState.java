@@ -5,6 +5,7 @@ import com.jme3.app.state.AppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.renderer.RenderManager;
+import org.impstack.jme.scene.ViewNode;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
