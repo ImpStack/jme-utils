@@ -6,7 +6,8 @@ import org.impstack.jme.state.BaseGuiAppState;
 
 /**
  * Class that represent the lifecycle of a View.
- * The {@link #initialize()} and {@link #cleanup()} methods are called in {@link BaseGuiAppState}.
+ * The {@link #setGuiAppstate(BaseGuiAppState)}, {@link #initialize()} and {@link #cleanup()} methods are called
+ * in {@link BaseGuiAppState}
  */
 public abstract class ViewNode<T extends BaseGuiAppState> extends Node {
 
