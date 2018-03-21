@@ -30,6 +30,9 @@ import java.nio.file.Paths;
  * When a colorspace is specified, this colorspace will be set on the texture of the DiffuseMap
  * of the materialDef.
  *
+ * Instead of a materialDef, a material itself can be set. This material takes precedence over the materialDef
+ * and colorspace options. When a material is given, this will be used for the model.
+ *
  * eg.
  * new ModelConverter("~/Projects/jme-template/assets"), assetManager).setModel("Models/test.blend").convert();
  */
