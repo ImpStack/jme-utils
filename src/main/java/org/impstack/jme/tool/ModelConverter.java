@@ -4,6 +4,7 @@ import com.jme3.asset.AssetManager;
 import com.jme3.export.binary.BinaryExporter;
 import com.jme3.material.MatParam;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Spatial;
 import com.jme3.texture.Texture;
@@ -19,20 +20,20 @@ import java.nio.file.Paths;
 
 /**
  * A utility class that converts a blender model to a j3o binary.
- *
+ * <p>
  * The given model is the path starting from the assets folder. The generated model
  * is placed next to the original blend file.
- *
+ * <p>
  * When an additional materialDef is specified, this materialDef will be set on the model.
  * All parameters set on the original materialDef will be copied to the new materialDef.
  * The materialDef is the path starting from the assets folder.
- *
+ * <p>
  * When a colorspace is specified, this colorspace will be set on the texture of the DiffuseMap
  * of the materialDef.
- *
- * Instead of a materialDef, a material itself can be set. This material takes precedence over the materialDef
- * and colorspace options. When a material is given, this will be used for the model.
- *
+ * <p>
+ * Instead of a materialDef, a material itself can be set. This material takes precedence over the materialDef,
+ * colorspace, faceculling and blendmode options. When a material is given, this will be used for the model.
+ * <p>
  * eg.
  * new ModelConverter("~/Projects/jme-template/assets"), assetManager).setModel("Models/test.blend").convert();
  */
@@ -47,6 +48,8 @@ public class ModelConverter {
     private Material material;
     private ColorSpace colorSpace;
     private RenderQueue.Bucket bucket;
+    private RenderState.BlendMode blendMode;
+    private RenderState.FaceCullMode faceCullMode;
 
     /**
      * @param assetsFolder the absolute path to the assets folder
@@ -83,6 +86,14 @@ public class ModelConverter {
                         LOG.info("Setting Colorspace {} on DiffuseMap", colorSpace);
                         ((Texture) matParam.getValue()).getImage().setColorSpace(colorSpace);
                     }
+                }
+                if (blendMode != null) {
+                    newMaterial.getAdditionalRenderState().setBlendMode(blendMode);
+                    LOG.info("Setting BlendMode {}", blendMode);
+                }
+                if (faceCullMode != null) {
+                    newMaterial.getAdditionalRenderState().setFaceCullMode(faceCullMode);
+                    LOG.info("Setting FaceCullMode {}", faceCullMode);
                 }
                 LOG.info("Setting {} on {}", materialDef, model);
                 geometry.setMaterial(newMaterial);
@@ -152,6 +163,24 @@ public class ModelConverter {
 
     public ModelConverter setBucket(RenderQueue.Bucket bucket) {
         this.bucket = bucket;
+        return this;
+    }
+
+    public RenderState.BlendMode getBlendMode() {
+        return blendMode;
+    }
+
+    public ModelConverter setBlendMode(RenderState.BlendMode blendMode) {
+        this.blendMode = blendMode;
+        return this;
+    }
+
+    public RenderState.FaceCullMode getFaceCullMode() {
+        return faceCullMode;
+    }
+
+    public ModelConverter setFaceCullMode(RenderState.FaceCullMode faceCullMode) {
+        this.faceCullMode = faceCullMode;
         return this;
     }
 
