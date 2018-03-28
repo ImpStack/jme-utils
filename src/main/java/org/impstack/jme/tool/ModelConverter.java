@@ -50,6 +50,7 @@ public class ModelConverter {
     private RenderQueue.Bucket bucket;
     private RenderState.BlendMode blendMode;
     private RenderState.FaceCullMode faceCullMode;
+    private RenderQueue.ShadowMode shadowMode;
 
     /**
      * @param assetsFolder the absolute path to the assets folder
@@ -106,10 +107,13 @@ public class ModelConverter {
         }
 
         if (bucket != null) {
-            SpatialUtils.getGeometry(spatial).ifPresent(geometry -> {
-                geometry.setQueueBucket(bucket);
-                LOG.info("Setting QueueBucket {} on {}", bucket, model);
-            });
+            spatial.setQueueBucket(bucket);
+            LOG.info("Setting QueueBucket {} on {}", bucket, model);
+        }
+
+        if (shadowMode != null) {
+            spatial.setShadowMode(shadowMode);
+            LOG.info("Setting ShadowMode {} on {}", shadowMode, model);
         }
 
         try {
@@ -181,6 +185,15 @@ public class ModelConverter {
 
     public ModelConverter setFaceCullMode(RenderState.FaceCullMode faceCullMode) {
         this.faceCullMode = faceCullMode;
+        return this;
+    }
+
+    public RenderQueue.ShadowMode getShadowMode() {
+        return shadowMode;
+    }
+
+    public ModelConverter setShadowMode(RenderQueue.ShadowMode shadowMode) {
+        this.shadowMode = shadowMode;
         return this;
     }
 
