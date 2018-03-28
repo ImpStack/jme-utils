@@ -28,7 +28,7 @@ import java.nio.file.Paths;
  * All parameters set on the original materialDef will be copied to the new materialDef.
  * The materialDef is the path starting from the assets folder.
  * <p>
- * When a colorspace is specified, this colorspace will be set on the texture of the DiffuseMap
+ * When a colorspace is specified, this colorspace will be set on the texture of the DiffuseMap or ColorMap
  * of the materialDef.
  * <p>
  * Instead of a materialDef, a material itself can be set. This material takes precedence over the materialDef,
@@ -83,8 +83,9 @@ public class ModelConverter {
                     } catch (IllegalArgumentException e) {
                         LOG.warn("Unable to set {} on materialDef {}", matParam, materialDef);
                     }
-                    if (matParam.getName().equals("DiffuseMap") && colorSpace != null) {
-                        LOG.info("Setting Colorspace {} on DiffuseMap", colorSpace);
+                    if ((matParam.getName().equals("DiffuseMap") && colorSpace != null) ||
+                            (matParam.getName().equals("ColorMap") && colorSpace != null)) {
+                        LOG.info("Setting Colorspace {} on DiffuseMap/ColorMap", colorSpace);
                         ((Texture) matParam.getValue()).getImage().setColorSpace(colorSpace);
                     }
                 }
