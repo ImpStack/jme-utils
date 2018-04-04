@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A utility class that converts a blender model to a j3o binary.
@@ -24,15 +26,15 @@ import java.nio.file.Paths;
  * The given model is the path starting from the assets folder. The generated model
  * is placed next to the original blend file.
  * <p>
- * When an additional materialDef is specified, this materialDef will be set on the model.
- * All parameters set on the original materialDef will be copied to the new materialDef.
+ * You can either specify a material or a materialDef for the model. When a material is specified,
+ * this material is set on the model. All extra supplied material parameters (colorspace, faceculling, ...) will be
+ * discarded in favour of the material.
+ * When you specify a materialDef, all parameters set on the original materialDef will be copied to the newly supplied
+ * materialDef.
  * The materialDef is the path starting from the assets folder.
  * <p>
  * When a colorspace is specified, this colorspace will be set on the texture of the DiffuseMap or ColorMap
  * of the materialDef.
- * <p>
- * Instead of a materialDef, a material itself can be set. This material takes precedence over the materialDef,
- * colorspace, faceculling and blendmode options. When a material is given, this will be used for the model.
  * <p>
  * eg.
  * new ModelConverter("~/Projects/jme-template/assets"), assetManager).setModel("Models/test.blend").convert();
@@ -51,6 +53,7 @@ public class ModelConverter {
     private RenderState.BlendMode blendMode;
     private RenderState.FaceCullMode faceCullMode;
     private RenderQueue.ShadowMode shadowMode;
+    private Set<MatParam> materialDefParams;
 
     /**
      * @param assetsFolder the absolute path to the assets folder
@@ -76,6 +79,7 @@ public class ModelConverter {
             SpatialUtils.getGeometry(spatial).ifPresent(geometry -> {
                 Material oldMaterial = geometry.getMaterial();
                 Material newMaterial = new Material(assetManager, materialDef);
+                // setting old material parameters on the new material definition
                 for (MatParam matParam : oldMaterial.getParams()) {
                     try {
                         newMaterial.setParam(matParam.getName(), matParam.getVarType(), matParam.getValue());
@@ -87,6 +91,17 @@ public class ModelConverter {
                             (matParam.getName().equals("ColorMap") && colorSpace != null)) {
                         LOG.info("Setting Colorspace {} on DiffuseMap/ColorMap", colorSpace);
                         ((Texture) matParam.getValue()).getImage().setColorSpace(colorSpace);
+                    }
+                }
+                // setting additional specified material parameters on the new material definition
+                if (materialDefParams != null) {
+                    for (MatParam matParam : materialDefParams) {
+                        try {
+                            newMaterial.setParam(matParam.getName(), matParam.getVarType(), matParam.getValue());
+                            LOG.info("Setting additional param {} -> {}", matParam.getName(), matParam.getValueAsString());
+                        } catch (IllegalArgumentException e) {
+                            LOG.warn("Unable to set additional param {} on materialDef {}", matParam, materialDef);
+                        }
                     }
                 }
                 if (blendMode != null) {
@@ -195,6 +210,18 @@ public class ModelConverter {
 
     public ModelConverter setShadowMode(RenderQueue.ShadowMode shadowMode) {
         this.shadowMode = shadowMode;
+        return this;
+    }
+
+    public Set<MatParam> getMaterialDefParams() {
+        return materialDefParams;
+    }
+
+    public ModelConverter setMatParam(MatParam materialParameter) {
+        if (materialDefParams == null) {
+            materialDefParams = new HashSet<>();
+        }
+        materialDefParams.add(materialParameter);
         return this;
     }
 
