@@ -19,7 +19,11 @@ public class SceneProcessorState extends BaseAppState {
     @Override
     protected void initialize(Application app) {
         fpp = new FilterPostProcessor(app.getAssetManager());
-        fpp.setNumSamples(app.getContext().getSettings().getSamples());
+        /**
+         * See:
+         * https://hub.jmonkeyengine.org/t/java-lang-unsupportedoperationexception-framebuffer-already-initialized-when-setting-numsamples-on-filterpostprocessor/40305
+         */
+        //fpp.setNumSamples(app.getContext().getSettings().getSamples());
 
         app.getViewPort().addProcessor(fpp);
         LOG.debug("Adding {} with {} samples on {}", fpp, fpp.getNumSamples(), app.getViewPort());
