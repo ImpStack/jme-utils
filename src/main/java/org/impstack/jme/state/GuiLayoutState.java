@@ -82,6 +82,8 @@ public class GuiLayoutState extends BaseAppState {
     }
 
     public void remove(Panel panel) {
-        panel.removeFromParent();
+        if (panel != null) {
+            panel.removeFromParent();
+        }
     }
 }
