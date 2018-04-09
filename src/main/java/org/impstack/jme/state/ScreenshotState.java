@@ -62,6 +62,11 @@ public class ScreenshotState extends ScreenshotAppState {
         setFileName(createFilename());
     }
 
+    public void takeScreenshot(String filename) {
+        super.takeScreenshot();
+        setFileName(filename);
+    }
+
     public void setTakeScreenshotTrigger(Trigger trigger) {
         application.getInputManager().deleteMapping("ScreenShot");
         application.getInputManager().addMapping("ScreenShot", trigger);
