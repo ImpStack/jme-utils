@@ -26,6 +26,9 @@ To build the library and install it in your local maven repository, run:
 
 Once installed in your local maven repository, you can include this library in your gradle project by adding this in your `build.gradle` file.
 ```
+repositories {
+    mavenLocal()
+}
 dependencies {
     compile "org.impstack:jme-utils:+"
 }
