@@ -54,7 +54,7 @@ public class StringUtils {
      * @return concatenated string
      */
     public static <T> String toString(Collection<T> collection, CharSequence delimiter) {
-        return collection != null ? collection.stream().map(Object::toString).collect(Collectors.joining(",")) : null;
+        return collection != null ? collection.stream().map(Object::toString).collect(Collectors.joining(delimiter)) : null;
     }
 
 }
