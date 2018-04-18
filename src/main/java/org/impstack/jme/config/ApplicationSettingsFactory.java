@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
+import java.util.Map;
 
 public final class ApplicationSettingsFactory {
 
@@ -33,7 +34,14 @@ public final class ApplicationSettingsFactory {
     private static final boolean FULLSCREEN_DEFAULT = false;
 
     public static AppSettings getAppSettings() {
+        return getAppSettings(null);
+    }
+
+    public static AppSettings getAppSettings(Map<String, String> overrides) {
         LOG.info("Loading application settings");
+        if (overrides != null && !overrides.isEmpty()) {
+            LOG.info("Using overrides: {}", overrides);
+        }
         LOG.debug("Supported resolutions: {}", ResolutionHelper.INSTANCE.getResolutions());
 
         GraphicsDevice graphicsDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -47,14 +55,21 @@ public final class ApplicationSettingsFactory {
         settings.setVSync(ApplicationProperties.INSTANCE.get(VSYNC, VSYNC_DEFAULT));
         settings.setSamples(ApplicationProperties.INSTANCE.get(ANTI_ALIASING, ANTI_ALIASING_DEFAULT));
         settings.setRenderer(ApplicationProperties.INSTANCE.get(RENDERER, RENDERER_DEFAULT));
-        settings.setFullscreen(ApplicationProperties.INSTANCE.get(FULLSCREEN, FULLSCREEN_DEFAULT));
+        if (overrides != null && overrides.containsKey(FULLSCREEN)) {
+            settings.setFullscreen(Boolean.parseBoolean(overrides.get(FULLSCREEN)));
+        } else {
+            settings.setFullscreen(ApplicationProperties.INSTANCE.get(FULLSCREEN, FULLSCREEN_DEFAULT));
+        }
 
         Resolution resolution = Resolution.fromString(ApplicationProperties.INSTANCE.get(RESOLUTION, RESOLUTION_DEFAULT));
+        if (overrides != null && overrides.containsKey(RESOLUTION)) {
+            resolution = Resolution.fromString(overrides.get(RESOLUTION));
+        }
         settings.setWidth(resolution.getWidth());
         settings.setHeight(resolution.getHeight());
         settings.setBitsPerPixel(resolution.getBpp());
 
-        settings.entrySet().forEach(entry -> LOG.debug("{} -> {}", entry.getKey(), entry.getValue()));
+        LOG.debug("Settings: {}", settings);
         return settings;
     }
 
