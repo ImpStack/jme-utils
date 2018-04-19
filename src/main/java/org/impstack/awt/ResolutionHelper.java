@@ -28,7 +28,7 @@ public enum ResolutionHelper {
      * Picks an appropriate resolution for the application window, considering the current aspect ratio.
      * For a ratio of 16/9, the HD standard (1280x720) will be picked.
      * For a ratio of 16/10, the WXGA standard (1280x800) will be picked.
-     * If the ratio isn't 16/9 or 16/10, the current resolution will be returned
+     * If the ratio isn't 16/9 or 16/10, the resolution is calculated based on the ratio of the current screen.
      * @return the resolution
      */
     public Resolution getBestWindowedResolution() {
@@ -41,8 +41,8 @@ public enum ResolutionHelper {
             LOG.debug("Found screen ratio {}, setting resolution to {}", "16/10", "1280x800");
             return new Resolution(1280, 800, displayMode.getBitDepth() );
         } else {
-            LOG.warn("Dit not found a standard screen ratio (16/9, 16/10), defaulting resolution to {}x{}", displayMode.getWidth(), displayMode.getHeight());
-            return new Resolution(displayMode.getWidth(), displayMode.getHeight(), displayMode.getBitDepth());
+            LOG.warn("Did not found a standard screen ration (16/9, 16/10), defaulting resolution to {}x{}", 1280, (int) (1280 / ratio));
+            return new Resolution(1280, (int) (1280 / ratio), displayMode.getBitDepth());
         }
     }
 
