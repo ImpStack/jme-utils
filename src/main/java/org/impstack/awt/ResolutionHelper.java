@@ -13,7 +13,7 @@ public enum ResolutionHelper {
 
     private static final Logger LOG = LoggerFactory.getLogger(ResolutionHelper.class);
 
-    private final double RATIO_16_9 = 16 / 9;
+    private final double RATIO_16_9 = 16 / (double) 9;
     private final double RATIO_16_10 = 1.6;
 
     public List<Resolution> getResolutions() {
