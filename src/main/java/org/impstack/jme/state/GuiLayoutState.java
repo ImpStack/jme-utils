@@ -86,4 +86,14 @@ public class GuiLayoutState extends BaseAppState {
             panel.removeFromParent();
         }
     }
+
+    /**
+     * Reposition the container when the window was resized
+     */
+    public void refresh() {
+        container.setLocalTranslation(0, getApplication().getCamera().getHeight(), 0);
+        container.setPreferredSize(container.getPreferredSize()
+                .setX(getApplication().getCamera().getWidth())
+                .setY(getApplication().getCamera().getHeight()));
+    }
 }
