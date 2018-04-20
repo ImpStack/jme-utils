@@ -24,14 +24,14 @@ public enum ResolutionHelper {
 
     /**
      * Picks the first supported HD resolution.
-     * @return the resolution, or null if no HD resolution is found.
+     * @return the resolution, or the current screen resolution
      */
     public Resolution getBestWindowSize() {
         DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
         return getResolutions().stream()
                 .filter(r -> r.getBpp() == displayMode.getBitDepth() && r.getWidth() >= 1280)
                 .min(Comparator.comparingInt(Resolution::getWidth))
-                .orElse(null);
+                .orElse(new Resolution(displayMode.getWidth(), displayMode.getHeight(), displayMode.getBitDepth()));
     }
 
 }
