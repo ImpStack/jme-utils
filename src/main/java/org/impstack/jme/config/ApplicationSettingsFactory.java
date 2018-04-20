@@ -30,7 +30,7 @@ public final class ApplicationSettingsFactory {
     private static final int FRAMERATE_DEFAULT = 60;
     private static final int ANTI_ALIASING_DEFAULT = 2;
     private static final String RENDERER_DEFAULT = AppSettings.LWJGL_OPENGL2;
-    private static final String RESOLUTION_DEFAULT = ResolutionHelper.INSTANCE.getBestWindowedResolution().toString();
+    private static final String RESOLUTION_DEFAULT = ResolutionHelper.INSTANCE.getBestWindowSize().toString();
     private static final boolean FULLSCREEN_DEFAULT = false;
 
     public static AppSettings getAppSettings() {
