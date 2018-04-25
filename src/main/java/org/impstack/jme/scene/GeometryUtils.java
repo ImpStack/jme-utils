@@ -4,9 +4,12 @@ import com.jme3.app.Application;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
+import com.jme3.scene.Node;
+import com.jme3.scene.debug.Arrow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,4 +78,18 @@ public final class GeometryUtils {
         geometry.setMaterial(material);
         return geometry;
     }
+
+    /**
+     * Creates a node with 3 arrows, that represent the coordinate axes. Where the red arrow represents the X axis,
+     * the green arrow represents the Y axis and the blue arrow represents the Z axis.
+     * @return the node holding the 3 arrows
+     */
+    public Node createCoordinateAxes() {
+        Node node = new Node("Coordinate axes");
+        node.attachChild(createGeometry("X-axis", new Arrow(Vector3f.UNIT_X), ColorRGBA.Red, false));
+        node.attachChild(createGeometry("Y-axis", new Arrow(Vector3f.UNIT_Y), ColorRGBA.Green, false));
+        node.attachChild(createGeometry("Z-axis", new Arrow(Vector3f.UNIT_Z), ColorRGBA.Blue, false));
+        return node;
+    }
+
 }
