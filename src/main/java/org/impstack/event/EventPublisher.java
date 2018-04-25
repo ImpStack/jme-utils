@@ -28,7 +28,7 @@ public enum EventPublisher {
         LOG.trace("Publishing {}", event);
         List<EventListener> listeners = getListenersForEvent(event.getClass());
         synchronized (listeners) {
-            getListenersForEvent(event.getClass()).forEach(l -> l.onEvent(event));
+            listeners.forEach(l -> l.onEvent(event));
         }
     }
 
