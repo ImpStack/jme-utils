@@ -79,6 +79,7 @@ public class ModelConverter {
             SpatialUtils.getGeometry(spatial).ifPresent(geometry -> {
                 Material oldMaterial = geometry.getMaterial();
                 Material newMaterial = new Material(assetManager, materialDef);
+                newMaterial.setName(oldMaterial.getName());
                 // setting old material parameters on the new material definition
                 for (MatParam matParam : oldMaterial.getParams()) {
                     try {
