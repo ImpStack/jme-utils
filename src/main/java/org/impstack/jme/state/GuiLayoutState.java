@@ -96,4 +96,9 @@ public class GuiLayoutState extends BaseAppState {
                 .setX(getApplication().getCamera().getWidth())
                 .setY(getApplication().getCamera().getHeight()));
     }
+
+    public Node getNode() {
+        return node;
+    }
+
 }
