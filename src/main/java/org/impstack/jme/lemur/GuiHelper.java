@@ -24,4 +24,24 @@ public final class GuiHelper {
         panel.setLocalTranslation((width / 2) - (panel.getPreferredSize().getX() / 2), (height / 2) + (panel.getPreferredSize().getY() / 2), panel.getLocalTranslation().getZ());
     }
 
+    /**
+     * Returns the pixels for the given percentage of the screen width.
+     * @param percentage a value between 0 and 1
+     * @return the width in pixels
+     */
+    public static float percentWidth(float percentage) {
+        int width = ApplicationContext.INSTANCE.getApplication().getCamera().getWidth();
+        return width * Math.min(Math.max(0, percentage), 1);
+    }
+
+    /**
+     * Returns the pixels for the given percentage of the screen height.
+     * @param percentage a value between 0 and 1
+     * @return the height in pixels
+     */
+    public static float percentHeight(float percentage) {
+        int height = ApplicationContext.INSTANCE.getApplication().getCamera().getHeight();
+        return height * Math.min(Math.max(0, percentage), 1);
+    }
+
 }
