@@ -48,6 +48,9 @@ public class BackgroundSystemsState extends BaseAppState {
      *  Enqueues a task that will be run at the beginning of the next
      *  update() call on the update thread.  This delegates to the
      *  TaskDispatcher system registered to this GameSystemManager.
+     *  @param callable the callable to enqueue
+     *  @param <T> the type of the callable
+     *  @return the future of the async computation
      */
     public <T> Future<T> enqueue(Callable<T> callable ) {
         return systemManager.enqueue(callable);
