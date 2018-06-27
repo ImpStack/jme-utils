@@ -2,6 +2,7 @@ package org.impstack.jme.lemur;
 
 import com.simsilica.lemur.Panel;
 import org.impstack.jme.ApplicationContext;
+import org.impstack.util.MathUtils;
 
 /**
  * A GUI method helper class
@@ -31,7 +32,7 @@ public final class GuiHelper {
      */
     public static float percentWidth(float percentage) {
         int width = ApplicationContext.INSTANCE.getApplication().getCamera().getWidth();
-        return width * Math.min(Math.max(0, percentage), 1);
+        return width * MathUtils.range(0, 1, percentage);
     }
 
     /**
@@ -41,7 +42,7 @@ public final class GuiHelper {
      */
     public static float percentHeight(float percentage) {
         int height = ApplicationContext.INSTANCE.getApplication().getCamera().getHeight();
-        return height * Math.min(Math.max(0, percentage), 1);
+        return height * MathUtils.range(0, 1, percentage);
     }
 
 }

@@ -5,7 +5,7 @@ import org.apache.commons.text.WordUtils;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class StringUtils {
+public final class StringUtils {
     /**
      * Converts a string to camelcase.
      * toCamelCase(null) : ""
