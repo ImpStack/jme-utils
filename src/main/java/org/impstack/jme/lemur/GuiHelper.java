@@ -45,4 +45,18 @@ public final class GuiHelper {
         return height * MathUtils.range(0, 1, percentage);
     }
 
+    /**
+     * @return The height/resolution of the display
+     */
+    public static int getHeight() {
+        return ApplicationContext.INSTANCE.getApplication().getCamera().getHeight();
+    }
+
+    /**
+     * @return The width/resolution of the display
+     */
+    public static int getWidth() {
+        return ApplicationContext.INSTANCE.getApplication().getCamera().getWidth();
+    }
+
 }
