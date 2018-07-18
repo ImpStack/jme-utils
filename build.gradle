@@ -49,11 +49,18 @@ publishing {
     }
 }
 
+// add assets folders/files to the jar
+jar {
+    from 'assets'
+}
+
+// a task to create the sources jar
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
     from sourceSets.main.allSource
 }
 
+// a task to create the javadoc jar
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir

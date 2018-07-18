@@ -1,7 +1,6 @@
-package org.impstack.math;
+package org.impstack.jme.math;
 
 import com.jme3.math.ColorRGBA;
-import org.impstack.jme.math.ColorHelper;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
