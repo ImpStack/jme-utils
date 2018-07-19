@@ -1,0 +1,20 @@
+Configuration:
+  appenders:
+    Console:
+      name: STDOUT
+      PatternLayout:
+        Pattern: "%d %-5p [%t] %C (%F:%L) - %m%n"
+
+  Loggers:
+    logger:
+      - name: org.impstack
+        level: all
+      - name: com.simsilica.lemur
+        level: debug
+      - name: com.jme3
+        level: info
+
+    Root:
+      level: error
+      AppenderRef:
+        - ref: STDOUT

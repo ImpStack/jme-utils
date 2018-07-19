@@ -1,3 +1,8 @@
+#import "Common/ShaderLib/MultiSample.glsllib"
+
+//#define SHOW_BOX
+//#define SHOW_DELTA
+
 uniform vec2 g_FrustumNearFar;
 uniform vec4 g_ViewPort;
 

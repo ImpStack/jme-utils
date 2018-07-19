@@ -1,3 +1,5 @@
+#import "Common/ShaderLib/MultiSample.glsllib"
+
 uniform COLORTEXTURE m_Texture;
 varying vec2 texCoord;
 

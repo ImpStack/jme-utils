@@ -9,4 +9,3 @@
  */
 
 rootProject.name = 'jme-utils'
-include ':assets'

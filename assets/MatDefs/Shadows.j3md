@@ -12,7 +12,7 @@ MaterialDef Simple Shadows {
 
     Technique {
         VertexShader GLSL120:   MatDefs/Shadows.vert
-        FragmentShader GLSL130: MatDefs/Shadows.frag
+        FragmentShader GLSL120: MatDefs/Shadows.frag
 
         WorldParameters {
             ViewProjectionMatrix

@@ -212,6 +212,7 @@ public class DropShadowFilter extends Filter {
             float yEx = bounds.getYExtent() * scale;
             float zEx = bounds.getZExtent() * scale;
             float volumeHeight = Math.max(yEx, Math.min(xEx,zEx));
+            // If you adapt the volumeHeight, the 'egg' shape of the shadow get's bigger. Make this value higher, if you want items high above to also drop a shadow.
 
             float xOffset = bounds.getCenter().x * scale;
             float yOffset = bounds.getCenter().y * scale;

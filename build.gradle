@@ -23,6 +23,7 @@ dependencies {
     compile "org.jmonkeyengine:jme3-core:${jmeVersion}"
     compile "org.jmonkeyengine:jme3-desktop:${jmeVersion}"
     compile "org.jmonkeyengine:jme3-lwjgl:${jmeVersion}"
+    compile "org.jmonkeyengine:jme3-effects:${jmeVersion}"
     compile "com.simsilica:lemur:+"
     compile "com.simsilica:lemur-proto:+"
     compile "com.simsilica:zay-es:+"
@@ -34,6 +35,20 @@ dependencies {
     compile "org.apache.commons:commons-text:1.+"
     compile "org.apache.commons:commons-lang3:3.+"
     testCompile "junit:junit:4.+"
+    testCompile "org.apache.logging.log4j:log4j-core:2.7"
+    testCompile "org.apache.logging.log4j:log4j-api:2.7"
+    testCompile "org.apache.logging.log4j:log4j-slf4j-impl:2.7"
+    testCompile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.8.+"
+    testCompile "com.fasterxml.jackson.core:jackson-databind:2.8.+"
+}
+
+// add the assets folder as a resources directory
+sourceSets {
+    main {
+        resources {
+            srcDirs = [ "src/main/resources", "assets" ]
+        }
+    }
 }
 
 publishing {
@@ -47,11 +62,6 @@ publishing {
             version '0.1'
         }
     }
-}
-
-// add assets folders/files to the jar
-jar {
-    from 'assets'
 }
 
 // a task to create the sources jar
