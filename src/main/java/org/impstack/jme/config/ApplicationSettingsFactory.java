@@ -28,7 +28,7 @@ public final class ApplicationSettingsFactory {
     private static final boolean VSYNC_DEFAULT = true;
     private static final boolean GAMMA_CORRECTION_DEFAULT = true;
     private static final int FRAMERATE_DEFAULT = 60;
-    private static final int ANTI_ALIASING_DEFAULT = 2;
+    private static final int ANTI_ALIASING_DEFAULT = 0;
     private static final String RENDERER_DEFAULT = AppSettings.LWJGL_OPENGL2;
     private static final String RESOLUTION_DEFAULT = ResolutionHelper.INSTANCE.getBestWindowSize().toString();
     private static final boolean FULLSCREEN_DEFAULT = false;
