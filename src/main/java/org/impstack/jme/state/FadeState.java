@@ -9,9 +9,15 @@ import org.impstack.jme.lemur.GuiHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * An application state that performs a fade in (color to scene) and fade out (scene to color).
+ * An application state that performs a fade-in (color to scene) and fade-out (scene to color).
  * The duration of the fade in/out animation can be set using {@link #setDuration(float)}.
+ *
+ * Listeners ({@link FadeListener} can be registered and unregistered on the application state to receive events when
+ * a fade-in or fade-out animation is completed.
  */
 public class FadeState extends BaseAppState {
 
@@ -24,6 +30,7 @@ public class FadeState extends BaseAppState {
     private float duration = 0.3f;
     private float value = 0f; // 0 = transparent; 1 = black
     private float direction = 1f; // 1 = fade out; -1 = fade in
+    private List<FadeListener> listeners = new ArrayList<>();
 
     public FadeState() {
     }
@@ -63,12 +70,14 @@ public class FadeState extends BaseAppState {
             if (direction == -1 && value < 0) {
                 value = 0;
                 animationRunning = false;
+                listeners.forEach(FadeListener::fadeInCompleted);
                 LOG.trace("Fade in completed");
             }
 
             if (direction == 1 && value > 1) {
                 value = 1;
                 animationRunning = false;
+                listeners.forEach(FadeListener::fadeOutCompleted);
                 LOG.trace("Fade out completed");
             }
 
@@ -100,5 +109,13 @@ public class FadeState extends BaseAppState {
 
     public boolean isAnimationRunning() {
         return animationRunning;
+    }
+
+    public void register(FadeListener listener) {
+        listeners.add(listener);
+    }
+
+    public void unregister(FadeListener listener) {
+        listeners.remove(listener);
     }
 }
