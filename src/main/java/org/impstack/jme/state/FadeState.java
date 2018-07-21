@@ -97,4 +97,8 @@ public class FadeState extends BaseAppState {
     public void setDuration(float duration) {
         this.duration = duration;
     }
+
+    public boolean isAnimationRunning() {
+        return animationRunning;
+    }
 }
