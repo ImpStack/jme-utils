@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * An application state that performs a fade-in (color to scene) and fade-out (scene to color).
  * The duration of the fade in/out animation can be set using {@link #setDuration(float)}.
- *
+ * <p>
  * Listeners ({@link FadeListener} can be registered and unregistered on the application state to receive events when
  * a fade-in or fade-out animation is completed.
  */
@@ -86,17 +86,21 @@ public class FadeState extends BaseAppState {
     }
 
     public void fadeIn() {
-        value = 1;
-        direction = -1;
-        animationRunning = true;
-        LOG.trace("Fading in...");
+        if (!animationRunning) {
+            value = 1;
+            direction = -1;
+            animationRunning = true;
+            LOG.trace("Fading in...");
+        }
     }
 
     public void fadeOut() {
-        value = 0;
-        direction = 1;
-        animationRunning = true;
-        LOG.trace("Fading out...");
+        if (!animationRunning) {
+            value = 0;
+            direction = 1;
+            animationRunning = true;
+            LOG.trace("Fading out...");
+        }
     }
 
     public float getDuration() {
