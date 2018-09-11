@@ -25,7 +25,7 @@ public class FadeState extends BaseAppState {
 
     private Panel overlay;
     private ColorRGBA overlayColor = ColorRGBA.Black;
-    private boolean attachOverlay = true;
+    private boolean overlayVisible = true;
     private boolean animationRunning = false;
     private float duration = 0.3f;
     private float value = 0f; // 0 = transparent; 1 = black
@@ -35,16 +35,16 @@ public class FadeState extends BaseAppState {
     public FadeState() {
     }
 
-    public FadeState(ColorRGBA overlayColor, boolean attachOverlay) {
+    public FadeState(ColorRGBA overlayColor, boolean overlayVisible) {
         this.overlayColor = overlayColor;
-        this.attachOverlay = attachOverlay;
+        this.overlayVisible = overlayVisible;
     }
 
     @Override
     protected void initialize(Application app) {
         overlay = new Panel(GuiHelper.getWidth(), GuiHelper.getHeight(), overlayColor);
         overlay.setLocalTranslation(0, GuiHelper.getHeight(), 999);
-        value = attachOverlay ? 1 : 0;
+        value = overlayVisible ? 1 : 0;
         overlay.setAlpha(value);
         ApplicationContext.INSTANCE.getGuiNode().attachChild(overlay);
     }
