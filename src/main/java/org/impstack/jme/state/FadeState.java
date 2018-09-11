@@ -10,7 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * An application state that performs a fade-in (color to scene) and fade-out (scene to color).
@@ -30,7 +32,8 @@ public class FadeState extends BaseAppState {
     private float duration = 0.3f;
     private float value = 0f; // 0 = transparent; 1 = black
     private float direction = 1f; // 1 = fade out; -1 = fade in
-    private List<FadeListener> listeners = new ArrayList<>();
+    private String mapping; // the mapping name that triggered the fade-in/fade-out
+    private Map<String, List<FadeListener>> listeners = new HashMap<>();
 
     public FadeState() {
     }
@@ -68,38 +71,40 @@ public class FadeState extends BaseAppState {
             value += tpf * (direction / duration);
 
             if (direction == -1 && value < 0) {
-                LOG.trace("Fade in completed");
+                LOG.trace("Fade in completed [{}]", mapping);
                 value = 0;
                 animationRunning = false;
-                listeners.forEach(FadeListener::fadeInCompleted);
+                getListenersForMapping(mapping).forEach(FadeListener::fadeInCompleted);
             }
 
             if (direction == 1 && value > 1) {
-                LOG.trace("Fade out completed");
+                LOG.trace("Fade out completed [{}]", mapping);
                 value = 1;
                 animationRunning = false;
-                listeners.forEach(FadeListener::fadeOutCompleted);
+                getListenersForMapping(mapping).forEach(FadeListener::fadeOutCompleted);
             }
 
             overlay.setAlpha(value);
         }
     }
 
-    public void fadeIn() {
+    public void fadeIn(String mapping) {
         if (!animationRunning) {
-            LOG.trace("Fading in...");
+            LOG.trace("Fading in... [{}]", mapping);
             value = 1;
             direction = -1;
             animationRunning = true;
+            this.mapping = mapping;
         }
     }
 
-    public void fadeOut() {
+    public void fadeOut(String mapping) {
         if (!animationRunning) {
-            LOG.trace("Fading out...");
+            LOG.trace("Fading out... [{}]", mapping);
             value = 0;
             direction = 1;
             animationRunning = true;
+            this.mapping = mapping;
         }
     }
 
@@ -115,11 +120,15 @@ public class FadeState extends BaseAppState {
         return animationRunning;
     }
 
-    public void register(FadeListener listener) {
-        listeners.add(listener);
+    public void register(String mapping, FadeListener listener) {
+        getListenersForMapping(mapping).add(listener);
     }
 
-    public void unregister(FadeListener listener) {
-        listeners.remove(listener);
+    public void unregister(String mapping, FadeListener listener) {
+        getListenersForMapping(mapping).remove(listener);
+    }
+
+    private List<FadeListener> getListenersForMapping(String mapping) {
+        return listeners.computeIfAbsent(mapping, f -> new ArrayList<>());
     }
 }
