@@ -68,17 +68,17 @@ public class FadeState extends BaseAppState {
             value += tpf * (direction / duration);
 
             if (direction == -1 && value < 0) {
+                LOG.trace("Fade in completed");
                 value = 0;
                 animationRunning = false;
                 listeners.forEach(FadeListener::fadeInCompleted);
-                LOG.trace("Fade in completed");
             }
 
             if (direction == 1 && value > 1) {
+                LOG.trace("Fade out completed");
                 value = 1;
                 animationRunning = false;
                 listeners.forEach(FadeListener::fadeOutCompleted);
-                LOG.trace("Fade out completed");
             }
 
             overlay.setAlpha(value);
@@ -87,19 +87,19 @@ public class FadeState extends BaseAppState {
 
     public void fadeIn() {
         if (!animationRunning) {
+            LOG.trace("Fading in...");
             value = 1;
             direction = -1;
             animationRunning = true;
-            LOG.trace("Fading in...");
         }
     }
 
     public void fadeOut() {
         if (!animationRunning) {
+            LOG.trace("Fading out...");
             value = 0;
             direction = 1;
             animationRunning = true;
-            LOG.trace("Fading out...");
         }
     }
 
