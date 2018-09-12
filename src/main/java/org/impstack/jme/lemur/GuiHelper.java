@@ -1,8 +1,12 @@
 package org.impstack.jme.lemur;
 
+import com.jme3.cursors.plugins.JmeCursor;
 import com.simsilica.lemur.Panel;
 import org.impstack.jme.ApplicationContext;
+import org.impstack.jme.scene.MouseCursor;
 import org.impstack.util.MathUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A GUI method helper class
@@ -10,6 +14,8 @@ import org.impstack.util.MathUtils;
  * @since 8/06/18.
  */
 public final class GuiHelper {
+
+    private static final Logger LOG = LoggerFactory.getLogger(GuiHelper.class);
 
     /**
      * Set the location of the panel to the center of the screen
@@ -57,6 +63,29 @@ public final class GuiHelper {
      */
     public static int getWidth() {
         return ApplicationContext.INSTANCE.getApplication().getCamera().getWidth();
+    }
+
+    /**
+     * Sets the visibility of the mouse cursor
+     * @param visible true or false
+     */
+    public static void setMouseCursorVisible(boolean visible) {
+        ApplicationContext.INSTANCE.getApplication().getInputManager().setCursorVisible(visible);
+        LOG.trace("Setting mouse cursor visible: {}", visible);
+    }
+
+    /**
+     * Sets a mouse cursor image. Set the {@link MouseCursor} to null to show the default system cursor.
+     * @param cursor the cursor to set, or null for the default system cursor
+     */
+    public static void setMouseCursor(MouseCursor cursor) {
+        if (cursor != null) {
+            ApplicationContext.INSTANCE.getApplication().getInputManager().setMouseCursor((JmeCursor) ApplicationContext.INSTANCE.getApplication().getAssetManager().loadAsset(cursor.getPath()));
+            LOG.trace("Setting mouse cursor: {}", cursor);
+        } else {
+            ApplicationContext.INSTANCE.getApplication().getInputManager().setMouseCursor(null);
+            LOG.trace("Setting default system cursor");
+        }
     }
 
 }
