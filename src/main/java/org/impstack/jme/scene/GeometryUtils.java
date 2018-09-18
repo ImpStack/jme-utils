@@ -58,6 +58,19 @@ public final class GeometryUtils {
     }
 
     /**
+     * Create a geometry of the given mesh, with the specified color and texture
+     * @param mesh the mesh of the geometry
+     * @param color the color of the material
+     * @param texture the texture of the material
+     * @return the geometry
+     */
+    public Geometry createGeometry(Mesh mesh, ColorRGBA color, String texture) {
+        Geometry geometry = createGeometry(mesh, color);
+        geometry.getMaterial().setTexture(DEBUG_MATERIAL_TEXTURE, application.getAssetManager().loadTexture(texture));
+        return geometry;
+    }
+
+    /**
      * Creates a geometry of the given mesh and an unshaded material with the given color
      * @param name name of the geometry
      * @param mesh the mesh
