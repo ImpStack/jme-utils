@@ -62,6 +62,11 @@ public class ScreenshotState extends ScreenshotAppState {
         setFileName(createFilename());
     }
 
+    @Override
+    public void setFilePath(String filePath) {
+        super.setFilePath(filePath.endsWith(File.separator) ? filePath : filePath + File.separator);
+    }
+
     public void takeScreenshot(String filename) {
         super.takeScreenshot();
         setFileName(filename);
