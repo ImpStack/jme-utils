@@ -54,6 +54,7 @@ public class ModelConverter {
     private RenderState.FaceCullMode faceCullMode;
     private RenderQueue.ShadowMode shadowMode;
     private Set<MatParam> materialDefParams;
+    private String materialName;
 
     /**
      * @param assetsFolder the absolute path to the assets folder
@@ -113,7 +114,11 @@ public class ModelConverter {
                     newMaterial.getAdditionalRenderState().setFaceCullMode(faceCullMode);
                     LOG.info("Setting FaceCullMode {}", faceCullMode);
                 }
-                LOG.info("Setting {} on {}", materialDef, model);
+                if (materialName != null) {
+                    newMaterial.setName(materialName);
+                    LOG.info("Setting name {}", materialName);
+                }
+                LOG.info("Setting {} on {}", newMaterial, model);
                 geometry.setMaterial(newMaterial);
             });
         } else if (material != null) {
@@ -223,6 +228,11 @@ public class ModelConverter {
             materialDefParams = new HashSet<>();
         }
         materialDefParams.add(materialParameter);
+        return this;
+    }
+
+    public ModelConverter setMaterialName(String materialName) {
+        this.materialName = materialName;
         return this;
     }
 
