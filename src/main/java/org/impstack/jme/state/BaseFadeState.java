@@ -197,7 +197,7 @@ public abstract class BaseFadeState implements AppState {
         initialized = false;
     }
 
-    void fadeIn() {
+    public void fadeIn() {
         if (!animationRunning) {
             log.trace("Fading in...");
             value = 1;
@@ -206,7 +206,7 @@ public abstract class BaseFadeState implements AppState {
         }
     }
 
-    void fadeOut() {
+    public void fadeOut() {
         if (!animationRunning) {
             log.trace("Fading out...");
             value = 0;
@@ -215,7 +215,7 @@ public abstract class BaseFadeState implements AppState {
         }
     }
 
-    void running(float tpf) {
+    public void running(float tpf) {
     }
 
     private void fadeInCompleted() {
@@ -241,6 +241,7 @@ public abstract class BaseFadeState implements AppState {
     public boolean isAnimationRunning() {
         return animationRunning;
     }
+
     public void setOverlayVisible(boolean visible) {
         if (visible != overlayVisible) {
             overlayVisible = visible;
