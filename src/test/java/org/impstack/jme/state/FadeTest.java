@@ -20,7 +20,7 @@ public class FadeTest extends JmeLauncher implements ActionListener {
 
     @Override
     public void init() {
-        stateManager.attach(new FadeState(ColorRGBA.Green, true));
+        stateManager.attach(new FadeState(ColorRGBA.Red, true));
 
         rootNode.attachChild(new GeometryUtils(this).createGeometry(new Sphere(32, 32, 1), ColorRGBA.Blue));
 
@@ -32,9 +32,9 @@ public class FadeTest extends JmeLauncher implements ActionListener {
     @Override
     public void onAction(String name, boolean isPressed, float tpf) {
         if ("fadeIn".equals(name) && !isPressed) {
-            stateManager.getState(FadeState.class).fadeIn();
+            stateManager.getState(FadeState.class).fadeIn(FadeTest.class.getSimpleName());
         } else if ("fadeOut".equals(name) && !isPressed) {
-            stateManager.getState(FadeState.class).fadeOut();
+            stateManager.getState(FadeState.class).fadeOut(FadeTest.class.getSimpleName());
         }
     }
 }
