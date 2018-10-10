@@ -21,6 +21,7 @@ import java.util.Map;
  * Listeners ({@link FadeListener} can be registered and unregistered on the application state to receive events when
  * a fade-in or fade-out animation is completed.
  */
+@Deprecated
 public class FadeState extends BaseAppState {
 
     private static final Logger LOG = LoggerFactory.getLogger(FadeState.class);
