@@ -37,7 +37,7 @@ public class Decay implements EntityComponent {
         return remaining / (double) duration;
     }
 
-    public boolean isDead() {
+    public boolean isExpired() {
         return System.currentTimeMillis() >= startTime + duration;
     }
 

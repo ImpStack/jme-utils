@@ -40,7 +40,7 @@ public class DecaySystem extends AbstractGameSystem {
         decayEntities.applyChanges();
         decayEntities.forEach(entity -> {
             Decay decay = entity.get(Decay.class);
-            if (decay.isDead()) {
+            if (decay.isExpired()) {
                 entityData.removeEntity(entity.getId());
                 LOG.trace("Removing entity {}", entity);
             }
