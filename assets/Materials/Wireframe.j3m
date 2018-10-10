@@ -1,0 +1,9 @@
+Material Wireframe : Common/MatDefs/Misc/Unshaded.j3md {
+     MaterialParameters {
+        Color : 0.2 0.4 1.0 1.0
+     }
+    AdditionalRenderState {
+        Wireframe On
+        LineWidth 1.0
+    }
+}
