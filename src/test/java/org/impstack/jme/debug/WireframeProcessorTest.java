@@ -51,12 +51,14 @@ public class WireframeProcessorTest extends JmeLauncher implements ActionListene
         if (name.equals(MAPPING) && !isPressed) {
             if (viewPort.getProcessors().contains(wireframeProcessor)) {
                 viewPort.removeProcessor(wireframeProcessor);
+                System.out.println("Removing " + wireframeProcessor);
             } else {
                 // set a custom color
                 wireframeProcessor.setColor(ColorRGBA.randomColor());
                 // set a custom line thickness
                 wireframeProcessor.setLineWidth(FastMath.nextRandomInt(1, 5));
                 viewPort.addProcessor(wireframeProcessor);
+                System.out.println("Adding " + wireframeProcessor);
             }
         }
     }

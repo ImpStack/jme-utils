@@ -79,4 +79,11 @@ public class WireframeProcessor implements SceneProcessor {
         wireframeMaterial.getAdditionalRenderState().setLineWidth(width);
     }
 
+    @Override
+    public String toString() {
+        return "WireframeProcessor{" +
+                "color=" + wireframeMaterial.getParam("Color").getValue() +
+                ", lineWidth=" + wireframeMaterial.getAdditionalRenderState().getLineWidth() +
+                '}';
+    }
 }
