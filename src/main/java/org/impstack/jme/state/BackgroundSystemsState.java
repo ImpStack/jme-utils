@@ -57,6 +57,9 @@ public class BackgroundSystemsState extends BaseAppState {
     }
 
     public <T extends GameSystem> boolean attach(T system) {
+        if (!isInitialized())
+            throw new IllegalStateException("BackgroundSystemsState is not yet initialized!");
+
         synchronized (systems) {
             if (!systems.contains(system)) {
                 systems.add(system);
@@ -68,6 +71,9 @@ public class BackgroundSystemsState extends BaseAppState {
     }
 
     public <T extends GameSystem> boolean detach(T system) {
+        if (!isInitialized())
+            throw new IllegalStateException("BackgroundSystemsState is not yet initialized!");
+
         synchronized (systems) {
             if (systems.contains(system)) {
                 systems.remove(system);
