@@ -9,7 +9,9 @@ import java.util.Set;
 
 /**
  * An abstract base class that implements a lot of boilerplate code to query and update an entity set.
+ * Deprecated, use {@link com.simsilica.es.EntityContainer}
  */
+@Deprecated
 public abstract class EntityContainer {
 
     private final EntityData entityData;
