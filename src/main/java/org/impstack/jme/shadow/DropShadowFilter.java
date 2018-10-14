@@ -266,6 +266,10 @@ public class DropShadowFilter extends Filter {
                 // Now calculate the view direction
                 vert = vert.subtractLocal(cam.getLocation());
                 vert.normalizeLocal();
+                if (invRotation == null) {
+                    // sometimes we get a NPE saying invRotation is null; didn't investigate any further, just setting it anyway.
+                    invRotation = new Quaternion();
+                }
                 viewDir = invRotation.mult(vert, viewDir);
                 bNormal.put(viewDir.x).put(viewDir.y).put(viewDir.z);
 
