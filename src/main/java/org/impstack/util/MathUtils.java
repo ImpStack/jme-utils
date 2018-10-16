@@ -22,7 +22,7 @@ public final class MathUtils {
      * @param min the minimum value
      * @param max the maximum value
      * @param value the value
-     * @return true if the value &gte; min and &lte; max.
+     * @return true if the value &gt;= min and &lt;= max.
      */
     public static boolean inRange(float min, float max, float value) {
         return min <= value && value <= max;
