@@ -7,10 +7,10 @@ public interface ModelRegistry {
     /**
      * Register a spatial with the model component.
      * @param model the model component holding the key
-     * @param spatial the spatial
-     * @return the spatial linked to the model component
+     * @param path the path inside the assets folder for the model
+     * @return the path to the model
      */
-    public Spatial register(Model model, Spatial spatial);
+    public String register(Model model, String path);
 
     /**
      * Returns the spatial linked to the model component.

@@ -1,5 +1,6 @@
 package org.impstack.jme.es;
 
+import com.jme3.asset.AssetManager;
 import com.jme3.scene.Spatial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,33 +17,38 @@ public class BaseModelRegistry implements ModelRegistry {
 
     private static final Logger LOG = LoggerFactory.getLogger(BaseModelRegistry.class);
 
-    private final Map<String, Spatial> registry = new ConcurrentHashMap<>();
+    protected final Map<String, String> registry = new ConcurrentHashMap<>();
+    protected final AssetManager assetManager;
 
-    @Override
-    public Spatial register(Model model, Spatial spatial) {
-        registry.put(model.getModelId(), spatial);
-        LOG.trace("Registering {} -> {}", model, spatial);
-        return spatial;
+    public BaseModelRegistry(AssetManager assetManager) {
+        this.assetManager = assetManager;
+    }
+
+    public String register(Model model, String modelPath) {
+        registry.put(model.getModelId(), modelPath);
+        LOG.trace("Registering {} -> {}", model, modelPath);
+        return modelPath;
     }
 
     @Override
     public Spatial get(Model model) {
-        Spatial spatial = registry.get(model.getModelId());
-        if (spatial != null) {
-            LOG.trace("Retrieving {} -> {}", model, spatial);
-            return spatial;
+        String path = registry.get(model.getModelId());
+        if (path != null) {
+            LOG.trace("Retrieving {} -> {}", model, path);
+            return assetManager.loadModel(path);
         }
 
-        // model isn't found in the registry. Use the custom loadSpatial() method.
-        spatial = loadSpatial(model);
-        if (spatial == null) {
+        // model isn't found in the registry. Use the custom getModelPath method
+        path = getModelPath(model);
+        if (path == null) {
             throw new IllegalArgumentException("No model could be retrieved for " + model);
         }
 
-        return register(model, spatial);
+        return assetManager.loadModel(register(model, path));
     }
 
-    protected Spatial loadSpatial(Model model) {
+    protected String getModelPath(Model model) {
         return null;
     }
+
 }
