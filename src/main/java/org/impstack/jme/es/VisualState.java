@@ -7,6 +7,7 @@ import com.jme3.scene.Spatial;
 import com.simsilica.es.Entity;
 import com.simsilica.es.EntityContainer;
 import com.simsilica.es.EntityData;
+import com.simsilica.es.EntityId;
 import org.impstack.jme.ApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,6 +107,10 @@ public class VisualState extends BaseAppState {
 
     public void setModelRegistry(ModelRegistry modelRegistry) {
         this.modelRegistry = modelRegistry;
+    }
+
+    public Spatial getModel(EntityId entityId) {
+        return models.getObject(entityId);
     }
 
     private class ModelContainer extends EntityContainer<Spatial> {
