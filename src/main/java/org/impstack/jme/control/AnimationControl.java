@@ -54,6 +54,12 @@ public class AnimationControl extends AbstractControl implements AnimEventListen
     protected void controlRender(RenderManager rm, ViewPort vp) {
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        animControl.setEnabled(enabled);
+    }
+
     public void setAnimation(String animation, LoopMode loopMode, float blendTime, float speed) {
         // no animation is playing or a different animation is playing
         if (mainChannel.getAnimationName() == null || !mainChannel.getAnimationName().equals(animation)) {
