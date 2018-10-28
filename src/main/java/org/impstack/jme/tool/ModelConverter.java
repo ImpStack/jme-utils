@@ -1,5 +1,6 @@
 package org.impstack.jme.tool;
 
+import com.jme3.animation.AnimControl;
 import com.jme3.asset.AssetManager;
 import com.jme3.export.binary.BinaryExporter;
 import com.jme3.material.MatParam;
@@ -144,6 +145,9 @@ public class ModelConverter {
             TangentBinormalGenerator.generate(spatial);
             LOG.info("Generating tangent vectors using {} on {}", TangentBinormalGenerator.class, model);
         }
+
+        // when there are animations found, log them
+        SpatialUtils.getControl(spatial, AnimControl.class).ifPresent(animControl -> LOG.info("Available animations: {}", animControl.getAnimationNames()));
 
         try {
             Path path = Paths.get(assetsFolder.toString(), getOutputName(model));
