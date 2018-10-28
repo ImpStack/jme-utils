@@ -9,6 +9,7 @@ import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Spatial;
 import com.jme3.texture.Texture;
 import com.jme3.texture.image.ColorSpace;
+import com.jme3.util.TangentBinormalGenerator;
 import org.apache.commons.lang3.StringUtils;
 import org.impstack.jme.scene.SpatialUtils;
 import org.slf4j.Logger;
@@ -55,6 +56,7 @@ public class ModelConverter {
     private RenderQueue.ShadowMode shadowMode;
     private Set<MatParam> materialDefParams;
     private String materialName;
+    private boolean generateTangentBinormal = true;
 
     /**
      * @param assetsFolder the absolute path to the assets folder
@@ -136,6 +138,11 @@ public class ModelConverter {
         if (shadowMode != null) {
             spatial.setShadowMode(shadowMode);
             LOG.info("Setting ShadowMode {} on {}", shadowMode, model);
+        }
+
+        if (generateTangentBinormal) {
+            TangentBinormalGenerator.generate(spatial);
+            LOG.info("Generating tangent vectors using {} on {}", TangentBinormalGenerator.class, model);
         }
 
         try {
@@ -233,6 +240,15 @@ public class ModelConverter {
 
     public ModelConverter setMaterialName(String materialName) {
         this.materialName = materialName;
+        return this;
+    }
+
+    public boolean isGenerateTangentBinormal() {
+        return generateTangentBinormal;
+    }
+
+    public ModelConverter setGenerateTangentBinormal(boolean generateTangentBinormal) {
+        this.generateTangentBinormal = generateTangentBinormal;
         return this;
     }
 
