@@ -33,6 +33,10 @@ public enum ApplicationProperties {
         String environmentFile = System.getProperty(ENV_APPLICATION_FILE);
         if (environmentFile != null) {
             LOG.info("Found {} property. Loading {}", ENV_APPLICATION_FILE, environmentFile);
+            if (!Files.exists(Paths.get(environmentFile))) {
+                LOG.warn("File {} could not be resolved. Using default {}", environmentFile, DEFAULT_FILE);
+                environmentFile = null;
+            }
         } else {
             LOG.info("No {} property found, loading default {}", ENV_APPLICATION_FILE, DEFAULT_FILE);
         }
