@@ -88,6 +88,10 @@ public class AnimationControl extends AbstractControl implements AnimEventListen
         return animControl.getAnimationNames();
     }
 
+    public AnimControl getAnimControl() {
+        return animControl;
+    }
+
     @Override
     public String toString() {
         return "AnimationControl{" +
