@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class BaseModelRegistry implements ModelRegistry {
 
-    private static final Logger LOG = LoggerFactory.getLogger(BaseModelRegistry.class);
+    protected static final Logger LOG = LoggerFactory.getLogger(BaseModelRegistry.class);
 
     protected final Map<String, String> registry = new ConcurrentHashMap<>();
     protected final AssetManager assetManager;
