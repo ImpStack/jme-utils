@@ -1,5 +1,9 @@
 package org.impstack.jme.scene;
 
+import com.jme3.bounding.BoundingBox;
+import com.jme3.bounding.BoundingSphere;
+import com.jme3.bounding.BoundingVolume;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
@@ -65,5 +69,38 @@ public final class SpatialUtils {
 
     public static Optional<Geometry> getGeometry(Spatial spatial) {
         return Optional.ofNullable(findGeometry(spatial));
+    }
+
+    /**
+     * Returns the extent vector of a bounding volume. For a bounding box this is the normal extent vector from the
+     * center, for a bounding sphere this is a vector holding the radius.
+     * @param bv the bounding volume
+     * @return a vector containing the extent
+     */
+    public static Vector3f getExtent(BoundingVolume bv) {
+        if (bv instanceof BoundingBox) {
+            return ((BoundingBox) bv).getExtent(null);
+        } else if (bv instanceof BoundingSphere) {
+            return new Vector3f(((BoundingSphere) bv).getRadius(), ((BoundingSphere) bv).getRadius(), ((BoundingSphere) bv).getRadius());
+        } else {
+            throw new IllegalArgumentException("Unable to determine bounding volume type: " + bv);
+        }
+    }
+
+    /**
+     * Returns the largest extent value of a bounding volume. For a bounding box this is the highest value for the axis
+     * for a bounding sphere this is the radius.
+     * @param bv the bounding volume
+     * @return the highest extent axis
+     */
+    public static float getMaxExtent(BoundingVolume bv) {
+       if (bv instanceof BoundingBox) {
+           Vector3f extent = ((BoundingBox) bv).getExtent(null);
+           return Math.max(extent.x, Math.max(extent.y, extent.z));
+       } else if (bv instanceof BoundingSphere) {
+           return ((BoundingSphere) bv).getRadius();
+       } else {
+           throw new IllegalArgumentException("Unable to determine bounding volume type: " + bv);
+       }
     }
 }
