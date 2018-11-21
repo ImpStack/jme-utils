@@ -8,15 +8,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A {@link com.simsilica.sim.GameSystem} that handles {@link Delay} components.
+ * A {@link com.simsilica.sim.GameSystem} implementation that handles {@link Delay} components.
+ * When the duration of the {@link Delay} entity component is expired, the entity components are added to the entity.
  */
 public class DelaySystem extends AbstractGameSystem {
 
     private static final Logger LOG = LoggerFactory.getLogger(DelaySystem.class);
 
-    private final EntityData entityData;
-
+    private EntityData entityData;
     private EntitySet delayedComponents;
+
+    public DelaySystem() {
+    }
 
     public DelaySystem(EntityData entityData) {
         this.entityData = entityData;
@@ -43,6 +46,10 @@ public class DelaySystem extends AbstractGameSystem {
     @Override
     protected void terminate() {
         delayedComponents.release();
+    }
+
+    public void setEntityData(EntityData entityData) {
+        this.entityData = entityData;
     }
 
 }

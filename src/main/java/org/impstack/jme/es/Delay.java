@@ -5,7 +5,8 @@ import com.simsilica.es.EntityComponent;
 import java.util.Arrays;
 
 /**
- * An entity component setting the given components after a delay in milliseconds.
+ * An entity component holding a duration and a list of entity components that is handled by the {@link DelaySystem}.
+ * The entity components are added to the entity after the given duration.
  */
 public class Delay implements EntityComponent {
 

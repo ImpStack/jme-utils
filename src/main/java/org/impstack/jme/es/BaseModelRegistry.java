@@ -10,8 +10,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A base model registry implementation that uses an internal thread-safe index to look up models.
- * The load method can be overwritten to allow for custom load behaviour for models that aren't found in the
- * registry.
+ * The {@link #getModelPath(Model)} method can be overwritten to allow for custom path retrieval for models that aren't
+ * found in the registry.
  */
 public class BaseModelRegistry implements ModelRegistry {
 
